@@ -1,0 +1,5 @@
+<template  name="title">
+<view class='container'>
+  <view class='title'></view>
+</view>
+</template>
