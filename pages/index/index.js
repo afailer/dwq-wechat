@@ -1,5 +1,7 @@
 // pages/recommend/index.js
-Page({
+var block = require("../template/index/block.js")
+var mixinUtil = require("../../utils/util.js") 
+let page = {
 
   /**
    * 页面的初始数据
@@ -63,4 +65,6 @@ Page({
   onShareAppMessage: function () {
 
   }
-})
+}
+
+Page(mixinUtil.mixinModule(page,block));

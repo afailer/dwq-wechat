@@ -1,3 +1,2 @@
 <import src="../template/index/block.wxml"/>
-
-<template is="title"/>
+<template is="title"/> 

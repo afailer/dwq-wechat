@@ -1,19 +1,31 @@
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
-
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+module.exports.mixinModule = function() {
+  let tempModel = {}
+  let targetModel = {}
+  for (let model in arguments) {
+    for (let data in arguments[model]) {
+      let l = arguments[model]
+      if (tempModel[data] == undefined) {
+        tempModel[data] = []
+      }
+      tempModel[data].push(l[data])
+    }
+  }
+  for (let key in tempModel) {
+    if (typeof tempModel[key][0] == "object") {
+      targetModel[key] = {}
+      for (let tempKey in tempModel[key]) {
+        Object.assign(targetModel[key], tempModel[key][tempKey])
+      }
+    } else if (typeof tempModel[key][0] == "function") {
+      targetModel[key] = function () {
+        for (let func of tempModel[key]) {
+          func()
+        }
+      }
+    }else{
+      targetModel[key] = tempModel[key][0]
+    }
+  }
+  return targetModel;
 }
 
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
-}
-
-module.exports = {
-  formatTime: formatTime
-}
